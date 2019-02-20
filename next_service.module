@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\node\Entity\Node;
+use Drupal\next_service\Controller\NsController;
 
 /**
  * Implements hook_help().
