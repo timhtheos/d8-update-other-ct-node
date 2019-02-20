@@ -28,5 +28,10 @@ function next_service_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_ENTITY_TYPE_insert() for node entity type.
  */
 function next_service_node_insert(Drupal\Core\Entity\EntityInterface $entity) {
-  
+  $bundle = $entity->bundle();
+
+  // We limit by bundle.
+  if ($bundle == 'page') {
+
+  }
 }
