@@ -59,7 +59,7 @@ function next_service_node_insert(Drupal\Core\Entity\EntityInterface $entity) {
     /*   ], */
     /* ]); */
 
-    $node_device->set('field_next_step', 'set text here');
+    $node_device->set('field_next_step', $entity->get('title')->value);
 
     // Save/update node in CT device.
     $node_device->save();
