@@ -32,11 +32,25 @@ class NsController extends ControllerBase {
       ->id();
 
     // Load CT device.
-    $node_device = \Drupal::entityTypeManager()->getStorage('node')->load($nid_device);
+    $node_device = $this->loadNode($nid_device);
 
     $node_device->set('field_next_step', $node->get('title')->value);
 
     // Save/update node in CT device.
     $node_device->save();
+  }
+
+  /**
+   * Load node by node id.
+   *
+   * @param int $nid
+   *   Node id.
+   *
+   * @return object
+   *   Node object.
+   */
+  function loadNode($nid) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+    return $node;
   }
 }
