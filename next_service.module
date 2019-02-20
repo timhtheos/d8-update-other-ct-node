@@ -28,41 +28,18 @@ function next_service_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_ENTITY_TYPE_insert() for node entity type.
  */
 function next_service_node_insert(Drupal\Core\Entity\EntityInterface $entity) {
-  $bundle = $entity->bundle();
+  // Only if node is worklog.
+  if ($entity->bundle() == 'worklog') {
+    $ns->updateDevice($entity);
+  }
+}
 
-  // We limit by bundle.
-  if ($bundle == 'worklog') {
-    // We get the node id and node revision id of the newly created node under CT worklog.
-    $nid_worklog = $entity->id();
-    $nrid_worklog = $entity->getRevisionId();
-
-    // We get the node id referenced in field_device in CT worklog.
-    // Not tested. Please check, xD.
-    $nid_device = $entity->get('field_device')
-      ->first() // If multiple. I'm not sure if this is needed or ok if stays as-is if the cardinality is 1.
-      ->get('entity')
-      ->getTarget()
-      ->getValue()
-      ->id();
-
-    // Load CT device.
-    $node_device = \Drupal::entityTypeManager()->getStorage('node')->load($nid_device);
-
-    // Set field field_next_step of CT device for node to be updated.
-    // If field_next_step is multiple, otherwise, remove the `1 =>` key.
-    // Basically, this just replaces the value (old value) set in field_next step in CT device.
-    // So, I assume the field is not multiple, but example given here is for multiple.
-    /* $node_device->set('field_next_step', [ */
-    /*   1 => [ // This may not be needed if not multiple, so just check and test. */
-    /*     'target_id' => $nid_worklog, */
-    /*     'target_revision_id' => $nrid_worklog, */
-    /*   ], */
-    /* ]); */
-
-    $node_device->set('field_next_step', $entity->get('title')->value);
-
-    // Save/update node in CT device.
-    $node_device->save();
-    
+/**
+ * Implements hook_ENTITY_TYPE_update() for node entity type.
+ */
+function next_service_node_update(Drupal\Core\Entity\EntityInterface $entity) {
+  // Only if node is worklog.
+  if ($entity->bundle() == 'worklog') {
+    $ns->updateDevice($entity);
   }
 }
