@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_help().
@@ -26,6 +27,6 @@ function next_service_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_ENTITY_TYPE_insert() for node entity type.
  */
-function next_service_node_insert() {
+function next_service_node_insert(Drupal\Core\Entity\EntityInterface $entity) {
   
 }
