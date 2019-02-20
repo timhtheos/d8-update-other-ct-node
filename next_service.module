@@ -46,7 +46,7 @@ function next_service_node_insert(Drupal\Core\Entity\EntityInterface $entity) {
       ->id();
 
     // Load CT device.
-    $node_device = \Drupal::entityTypeManager()->getStorage($entity_type)->load($nid_device);
+    $node_device = \Drupal::entityTypeManager()->getStorage('node')->load($nid_device);
 
     // Set field field_next_step of CT device for node to be updated.
     // If field_next_step is multiple, otherwise, remove the `1 =>` key.
